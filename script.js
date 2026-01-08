@@ -24,7 +24,7 @@ let comp_score = 0;
 let human_score = 0;
 
 
-function playRound() {
+function playRound(human_choice,comp_choice) {
 
     let result;
 
@@ -56,17 +56,19 @@ function playRound() {
     return result;
 }
 
-function playGame() {
-    for (i = 1; i = 5; i++) {
-
-        console.log(`The computer choice is ${getComputerChoice}`);
-        console.log(`Your choice is ${getHumanChoice}`);
-        console.log(playRound());
-        console.log(comp_score);
-        console.log(human_score);
+function playGame(rounds) {
+    for (let i = 1; i <=rounds; i++) {
+        let human_choice=getHumanChoice().toLowerCase();
+        let comp_choice=getComputerChoice().toLowerCase();
+        console.log(`The computer choice is ${comp_choice}`);
+        console.log(`Your choice is ${human_choice}`);
+        console.log(playRound(human_choice,comp_choice));
+        console.log(`The computer score is: ${comp_score}` );
+        console.log(`Your scores is: ${human_score}`);
 
     }
+    console.log(`Final result: Player won ${human_score} rounds and computer won ${comp_score} rounds! `)
 }
 
 
-playGame();
+playGame(5);
