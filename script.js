@@ -3,72 +3,104 @@ function getComputerChoice() {
     let comp_choice;
     let num_choice = Math.random()
     if (num_choice >= 0 && num_choice <= (1 / 3)) {
-        comp_choice = 'Paper';
+        comp_choice = 'paper';
     } else if (num_choice > (1 / 3) && num_choice <= (2 / 3)) {
-        comp_choice = 'Rock';
+        comp_choice = 'rock';
     } else if (num_choice > (2 / 3) && num_choice <= (1)) {
-        comp_choice = 'Scissors';
+        comp_choice = 'scissors';
     }
     return comp_choice;
 }
 
-function getHumanChoice() {
-
-    let human_choice = prompt("Please enter either 'Rock', 'Paper' or 'Scissors'");
-
-    return human_choice;
-}
-
-
 let comp_score = 0;
 let human_score = 0;
+let human_choice;
 
-
-function playRound(human_choice,comp_choice) {
+function playRound(human_choice, comp_choice) {
 
     let result;
 
     if (human_choice == "rock" && comp_choice == "scissors") {
-        result = ("You win! Rock beats Scissors!");
         human_score++;
+        result = (`You win! Rock beats Scissors! Player score is ${human_score} and computer score is ${comp_score}`);
     } else if (human_choice == "paper" && comp_choice == "rock") {
-        result = ("You win! Paper beats Rock!");
         human_score++;
-
+        result = (`You win! Paper beats Rock! Player score is ${human_score} and computer score is ${comp_score}`);
     } else if (human_choice == "scissors" && comp_choice == "paper") {
-        result = ("You win! Scissors beats Paper!");
         human_score++;
-
+        result = (`You win! Scissors beats Paper! Player score is ${human_score} and computer score is ${comp_score}`);
     } else if (comp_choice == "paper" && human_choice == "rock") {
-        result = ("You lose! Paper beats Rock!");
         comp_score++;
+        result = (`You lose! Paper beats Rock! Player score is ${human_score} and computer score is ${comp_score}`);
     } else if (comp_choice == "scissors" && human_choice == "paper") {
-        result = ("You lose! Scissors beats Paper!");
         comp_score++;
-
+        result = (`You lose! Scissors beats Paper! Player score is ${human_score} and computer score is ${comp_score}`);
     } else if (comp_choice == "rock" && human_choice == "scissors") {
-        result = ("You lose! Rock beats Scissors!");
         comp_score++;
-
+        result = (`You lose! Rock beats Scissors! Player score is ${human_score} and computer score is ${comp_score}`);
     } else {
         result = ("It's a Tie!");
     }
     return result;
 }
 
-function playGame(rounds) {
-    for (let i = 1; i <=rounds; i++) {
-        let human_choice=getHumanChoice().toLowerCase();
-        let comp_choice=getComputerChoice().toLowerCase();
-        console.log(`The computer choice is ${comp_choice}`);
-        console.log(`Your choice is ${human_choice}`);
-        console.log(playRound(human_choice,comp_choice));
-        console.log(`The computer score is: ${comp_score}` );
-        console.log(`Your scores is: ${human_score}`);
+
+const container = document.querySelector("#game");
+
+const playerRock = document.createElement("button");
+const playerPaper = document.createElement("button");
+const playerScissors = document.createElement("button");
+
+playerRock.textContent = "Rock";
+playerPaper.textContent = "Paper";
+playerScissors.textContent = "Scissors";
+
+container.appendChild(playerRock);
+container.appendChild(playerPaper);
+container.appendChild(playerScissors);
+
+const results = document.querySelector("#results");
+
+function addResult() {
+
+    const roundResult = (playRound(humanChoice, getComputerChoice()));
+    const listResults = document.createElement("li");
+    const span = document.createElement("span");
+    span.textContent = roundResult;
+
+    if (human_score === 5) {/*  */
+        alert(`You win! Player score is ${human_score} and computer score is ${comp_score}!`);
+        human_score = 0;
+        comp_score = 0;
+                listResults.appendChild(span);
+        results.appendChild(listResults);
+        results.replaceChildren();
+
+    } else if (comp_score === 5) {
+        alert(`You lose! Player score is ${human_score} and computer score is ${comp_score}!`);
+        comp_score = 0;
+        human_score = 0;
+                listResults.appendChild(span);
+        results.appendChild(listResults);
+        results.replaceChildren();
+    } else if (comp_score < 5 && human_score < 5) {
+        listResults.appendChild(span);
+        results.appendChild(listResults);
 
     }
-    console.log(`Final result: Player won ${human_score} rounds and computer won ${comp_score} rounds! `)
+
 }
 
+playerRock.addEventListener("click", () => {
+    humanChoice = "rock";
+    addResult();
+})
+playerPaper.addEventListener("click", () => {
+    humanChoice = "paper";
+    addResult();
+})
+playerScissors.addEventListener("click", () => {
+    humanChoice = "scissors";
+    addResult();
+})
 
-playGame(5);
