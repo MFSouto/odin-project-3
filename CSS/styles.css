@@ -1,0 +1,30 @@
+html{
+    background-color: #FEE9E7;
+}
+
+header h1{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: indigo;
+}
+
+p{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: indigo;
+}
+
+#game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#results{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
